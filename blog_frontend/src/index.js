@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { BrowserRouter } from 'react-router-dom';
+import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSageMiddleware from 'redux-saga';
+import App from './App';
+import './index.css';
 import rootReducer, { rootSaga } from './modules';
-import { tempSetUser, check } from './modules/user';
+import { check, tempSetUser } from './modules/user';
+import reportWebVitals from './reportWebVitals';
 
 const sagaMiddleware = createSageMiddleware();
 const store = createStore(
@@ -35,7 +36,9 @@ loadUser();
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')
